@@ -1,0 +1,28 @@
+{
+    "python-envs.defaultEnvManager": "ms-python.python:conda",
+    "python-envs.defaultPackageManager": "ms-python.python:conda",
+    "python-envs.pythonProjects": [],
+    "dbcode.connections": [
+        {
+            "connectionId": "BLfi5uktPRR4GMs9T18qc",
+            "name": "ConnectedMySQL",
+            "driver": "mysql",
+            "color": "#33B8FF",
+            "connectionType": "host",
+            "host": "localhost",
+            "port": 3306,
+            "ssl": false,
+            "username": "root",
+            "password": "",
+            "savePassword": "secretStorage",
+            "database": "images",
+            "readOnly": false,
+            "postConnectionSqlType": "inline",
+            "connectionTimeout": 30,
+            "driverOptions": {
+                "retrievePublickey": true,
+                "disableMultiStatements": false
+            }
+        }
+    ]
+}

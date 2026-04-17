@@ -1,0 +1,4 @@
+@use "element-plus/theme-chalk/src/index.scss" as * with (
+  $--color-primary: #10b981,   // 自定义主色（青绿色）
+  $--border-radius-base: 8px
+);

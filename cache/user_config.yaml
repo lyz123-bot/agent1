@@ -1,0 +1,5 @@
+cache_dir: null
+hub_name: huggingface
+lang: zh
+last_model: DeepSeek-R1-1.5B-Distill
+path_dict: {}

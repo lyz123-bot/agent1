@@ -1,0 +1,79 @@
+html, body, #app { height: 100%; background: #0a0f1a; }
+
+/* 侧边栏「退出登录」下拉菜单：与深色侧边栏一致 */
+.app-dropdown-overlay.ant-dropdown .ant-dropdown-menu {
+  background: #0d1320 !important;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+}
+.app-dropdown-overlay.ant-dropdown .ant-dropdown-menu-item {
+  color: rgba(255, 255, 255, 0.8);
+}
+.app-dropdown-overlay.ant-dropdown .ant-dropdown-menu-item:hover {
+  background: rgba(22, 119, 255, 0.15) !important;
+  color: #fff;
+}
+
+/* 会话页标题栏三点菜单下拉：深色风格 */
+.chat-dropdown-overlay.ant-dropdown .ant-dropdown-menu {
+  background: #0d1320 !important;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+}
+.chat-dropdown-overlay.ant-dropdown .ant-dropdown-menu-item {
+  color: rgba(255, 255, 255, 0.85);
+}
+.chat-dropdown-overlay.ant-dropdown .ant-dropdown-menu-item:hover {
+  background: rgba(22, 119, 255, 0.15) !important;
+  color: #fff;
+}
+
+/* 聊天对话气泡 & 滚动条微调 */
+.user-card {
+  background: #1677ff !important;
+  color: #fff !important;
+  border: none !important;
+}
+.msg-box::-webkit-scrollbar-thumb {
+  background: #2a3d55;
+  border-radius: 4px;
+}
+
+/* 识图页弹窗：深色风格 */
+.locator-modal-dark .ant-modal-content {
+  background: #0d1320 !important;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.5);
+}
+.locator-modal-dark .ant-modal-header {
+  background: transparent !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+.locator-modal-dark .ant-modal-title {
+  color: #fff !important;
+}
+.locator-modal-dark .ant-modal-close-x {
+  color: rgba(255, 255, 255, 0.6);
+}
+.locator-modal-dark .ant-modal-close-x:hover {
+  color: #fff;
+}
+.locator-modal-dark .ant-modal-body {
+  color: rgba(255, 255, 255, 0.85);
+}
+.locator-modal-dark .ant-steps-item-title {
+  color: rgba(255, 255, 255, 0.9) !important;
+}
+.locator-modal-dark .ant-steps-item-description {
+  color: rgba(255, 255, 255, 0.55) !important;
+}
+.locator-modal-dark .ant-steps-item-icon {
+  background: rgba(22, 119, 255, 0.2) !important;
+  border-color: rgba(22, 119, 255, 0.5) !important;
+}
+.locator-modal-dark .ant-steps-item-tail::after {
+  background: rgba(255, 255, 255, 0.12) !important;
+}
