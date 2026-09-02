@@ -1,0 +1,9 @@
+后端：
+conda activate agent
+cd C:\Users\33572\Desktop\ai_agent
+python manage.py runserver
+
+前端：
+cd my-frontend
+npm run dev
+

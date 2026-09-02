@@ -143,3 +143,4 @@ def generate_stream(
                 yield delta.content
     except Exception as e:
         yield f"\n\n[生成失败: {e}]"
+

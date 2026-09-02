@@ -77,3 +77,92 @@ html, body, #app { height: 100%; background: #0a0f1a; }
 .locator-modal-dark .ant-steps-item-tail::after {
   background: rgba(255, 255, 255, 0.12) !important;
 }
+
+/* 深色弹窗内：向量库使用指南、文件预览、Chunk（内容挂载在 body） */
+.locator-modal-dark .help-content {
+  padding: 10px 20px;
+}
+.locator-modal-dark .help-content p,
+.locator-modal-dark .help-content li {
+  color: rgba(255, 255, 255, 0.7);
+}
+.locator-modal-dark pre.chunk-preview-pre {
+  margin: 0;
+  padding: 16px;
+  white-space: pre-wrap;
+  word-break: break-word;
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  color: rgba(255, 255, 255, 0.88);
+  font-size: 13px;
+  line-height: 1.6;
+  max-height: 60vh;
+  overflow: auto;
+}
+.locator-modal-dark .preview-container {
+  display: flex;
+  flex-direction: column;
+  height: 70vh;
+}
+.locator-modal-dark .preview-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 16px;
+  margin-bottom: 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+.locator-modal-dark .preview-header h3 {
+  margin: 0 0 4px 0;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 600;
+}
+.locator-modal-dark .file-info {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.locator-modal-dark .file-meta {
+  display: flex;
+  gap: 16px;
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 13px;
+  margin-top: 4px;
+}
+.locator-modal-dark .preview-content {
+  flex: 1;
+  overflow: auto;
+}
+.locator-modal-dark .preview-body {
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+}
+.locator-modal-dark .preview-body h4 {
+  margin: 0 0 8px 0;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 15px;
+}
+.locator-modal-dark .preview-text {
+  margin-top: 16px;
+  line-height: 1.8;
+  color: rgba(255, 255, 255, 0.65);
+}
+.locator-modal-dark .preview-text p {
+  margin: 0 0 10px 0;
+}
+.locator-modal-dark .loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  min-height: 200px;
+}
+.locator-modal-dark .ant-btn-primary {
+  background: linear-gradient(135deg, #1677ff 0%, #4096ff 100%) !important;
+  border: none !important;
+  box-shadow: 0 4px 16px rgba(22, 119, 255, 0.35);
+}

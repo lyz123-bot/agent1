@@ -7,8 +7,8 @@ drf_spectacular==0.28.0
 langchain==0.3.27
 langchain_community==0.3.29
 langchain_huggingface==0.3.1
-matplotlib==3.10.6
-numpy==2.3.2
+matplotlib==3.8.4
+numpy==2.2.6
 opencv_python==4.12.0.88
 opencv_python_headless==4.10.0.84
 pdfplumber==0.11.7
@@ -21,5 +21,5 @@ python-dotenv>=1.0.0
 rfdetr==1.1.0
 sentence_transformers==5.0.0
 supervision==0.26.1
-torch==2.7.1+cu128
+torch==2.2.2
 tqdm==4.67.1

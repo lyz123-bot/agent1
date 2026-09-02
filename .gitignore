@@ -15,3 +15,41 @@ build/
 .venv/
 venv/
 env/
+
+# 模型权重
+*.pth
+*.pt
+*.onnx
+weights/
+
+# 数据库
+db.sqlite3
+*.sqlite3
+
+# 敏感信息
+accounts/
+
+# 缓存/临时目录
+cache/
+locator_tmp/
+vectordb/
+vector_store/
+uploads/
+
+# 前端
+my-frontend/node_modules/
+my-frontend/dist/
+
+# 系统文件
+.DS_Store
+
+# 虚拟环境
+.venv/
+
+# 模型权重/大文件
+weights/
+*.pth
+chat/models/
+
+db.sqlite3
+vector_store/

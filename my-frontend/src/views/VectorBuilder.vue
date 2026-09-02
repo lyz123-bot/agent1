@@ -1,6 +1,6 @@
 <template>
-  <div class="vector-builder">
-    <a-page-header title="向量数据库管理" sub-title="上传文档以进行向量化处理，支持批量操作" class="page-header" :ghost="false">
+  <div class="vdb-container">
+    <a-page-header title="向量数据库管理" sub-title="上传文档以进行向量化处理，支持批量操作" class="page-header">
       <template #extra>
         <a-button type="primary" @click="showHelpModal">
           <template #icon>
@@ -11,7 +11,7 @@
       </template>
     </a-page-header>
 
-    <a-tabs v-model:activeKey="activeTab">
+    <a-tabs v-model:activeKey="activeTab" class="vdb-tabs">
       <!-- 上传文档 Tab -->
       <a-tab-pane key="upload" tab="上传文档">
         <a-card class="upload-card" :bordered="false">
@@ -24,7 +24,7 @@
                   @remove="confirmRemove" :show-upload-list="false" class="dragger" :disabled="uploading">
                   <div class="upload-content">
                     <div class="upload-icon">
-                      <CloudUploadOutlined style="font-size: 48px; color: #1890ff" />
+                      <CloudUploadOutlined class="upload-dragger-icon" />
                     </div>
                     <p class="ant-upload-text">拖拽文件到此处或点击上传</p>
                     <p class="ant-upload-hint">
@@ -58,8 +58,8 @@
                 </div>
               </a-card>
 
-              <a-alert v-if="hasPendingFiles" message="提示" description="请点击「开始上传」按钮处理选中的文件" type="info" show-icon
-                style="margin-top: 16px" />
+              <a-alert v-if="hasPendingFiles" class="pending-tip-alert" message="提示"
+                description="请点击「开始上传」按钮处理选中的文件" type="info" show-icon />
             </a-col>
 
             <!-- 本地列表（模拟） -->
@@ -135,7 +135,8 @@
         </a-card>
 
         <!-- 帮助模态框 -->
-        <a-modal v-model:open="helpVisible" title="向量数据库使用指南" width="800px" :footer="null">
+        <a-modal v-model:open="helpVisible" title="向量数据库使用指南" width="800px" :footer="null"
+          wrap-class-name="locator-modal-dark">
           <div class="help-content">
             <a-steps direction="vertical" :current="3">
               <a-step title="文件准备">
@@ -183,7 +184,8 @@
         </a-modal>
 
         <!-- 文件预览模态框 -->
-        <a-modal v-model:open="previewVisible" :title="previewTitle" width="80%" :footer="null">
+        <a-modal v-model:open="previewVisible" :title="previewTitle" width="80%" :footer="null"
+          wrap-class-name="locator-modal-dark">
           <div v-if="currentPreview" class="preview-container">
             <div class="preview-header">
               <div class="file-info">
@@ -224,7 +226,7 @@
 
       <!-- 管理已入库文档 Tab -->
       <a-tab-pane key="manage" tab="已入库文档">
-        <a-card>
+        <a-card class="stored-panel-card">
           <div class="stored-header">
             <a-space>
               <a-input-search v-model:value="storedSearchText" placeholder="搜索来源文件或文档哈希" allow-clear
@@ -236,8 +238,8 @@
 
           </div>
 
-          <a-table :data-source="filteredStoredList" :row-key="record => record.doc_hash" :pagination="storedPagination"
-            :loading="storedLoading">
+          <a-table class="stored-table" :data-source="filteredStoredList" :row-key="record => record.doc_hash"
+            :pagination="storedPagination" :loading="storedLoading">
             <a-table-column title="来源文件" dataIndex="source" key="source" />
             <a-table-column title="Chunk ID" dataIndex="chunk_id" key="chunk_id" width="80" />
             <a-table-column title="文档哈希" dataIndex="doc_hash" key="doc_hash" />
@@ -255,8 +257,9 @@
         </a-card>
 
         <!-- Chunk 预览模态 -->
-        <a-modal v-model:open="chunkPreviewVisible" title="Chunk 预览" width="60%" :footer="null">
-          <pre style="white-space: pre-wrap;">{{ currentChunk.page_content }}</pre>
+        <a-modal v-model:open="chunkPreviewVisible" title="Chunk 预览" width="60%" :footer="null"
+          wrap-class-name="locator-modal-dark">
+          <pre class="chunk-preview-pre">{{ currentChunk.page_content }}</pre>
         </a-modal>
       </a-tab-pane>
     </a-tabs>
@@ -452,34 +455,106 @@ watch(activeTab, key => {
 </script>
 
 <style scoped>
-.vector-builder {
+/* 与智能识图页一致的深色主内容区 */
+.vdb-container {
+  padding: 20px;
+  background: #0a0f1a;
+  min-height: 100%;
+  color: rgba(255, 255, 255, 0.9);
   max-width: 1400px;
   margin: 0 auto;
-  padding: 24px;
 }
 
 .page-header {
-  padding: 0;
-  margin-bottom: 35px;
-  background: transparent;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 16px 24px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.2);
+}
+.page-header :deep(.ant-page-header-heading-title) {
+  color: #fff;
+}
+.page-header :deep(.ant-page-header-heading-sub-title) {
+  color: rgba(255, 255, 255, 0.55);
+}
+.page-header :deep(.ant-btn-primary) {
+  background: linear-gradient(135deg, #1677ff 0%, #4096ff 100%) !important;
+  border: none !important;
+  box-shadow: 0 4px 16px rgba(22, 119, 255, 0.35);
+}
+
+.vdb-tabs {
+  margin-top: 4px;
+}
+.vdb-tabs :deep(.ant-tabs-nav) {
+  margin-bottom: 16px;
+}
+.vdb-tabs :deep(.ant-tabs-tab) {
+  color: rgba(255, 255, 255, 0.6);
+}
+.vdb-tabs :deep(.ant-tabs-tab-active .ant-tabs-tab-btn) {
+  color: #fff;
+}
+.vdb-tabs :deep(.ant-tabs-ink-bar) {
+  background: #1677ff;
+}
+.vdb-tabs :deep(.ant-tabs-nav::before) {
+  border-color: rgba(255, 255, 255, 0.08);
 }
 
 .upload-card {
-  background: transparent;
-  border-radius: 8px;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+.upload-card :deep(.ant-card-body) {
+  padding: 0;
 }
 
 .upload-area,
 .file-list-card {
-  border-radius: 8px;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.05);
+  background: rgba(255, 255, 255, 0.03) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-radius: 14px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
   margin-bottom: 24px;
-  border: 1px solid #f0f0f0;
-  padding: 24px 32px !important;
+  padding: 24px 28px !important;
+}
+.upload-area :deep(.ant-card-head),
+.file-list-card :deep(.ant-card-head) {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  color: #fff;
+}
+.upload-area :deep(.ant-card-head-title),
+.file-list-card :deep(.ant-card-head-title) {
+  color: #fff;
+  font-weight: 600;
+}
+.upload-area :deep(.ant-card-body),
+.file-list-card :deep(.ant-card-body) {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.dragger :deep(.ant-upload-drag) {
+  background: rgba(255, 255, 255, 0.04) !important;
+  border: 1px dashed rgba(255, 255, 255, 0.15) !important;
+  border-radius: 12px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.dragger :deep(.ant-upload-drag:hover:not(.ant-upload-disabled)) {
+  border-color: rgba(22, 119, 255, 0.5) !important;
+  box-shadow: 0 0 0 2px rgba(22, 119, 255, 0.15);
 }
 
 .dragger {
-  padding: 60px 40px !important;
+  padding: 48px 32px !important;
+}
+
+.upload-dragger-icon {
+  font-size: 48px;
+  color: #69b1ff;
 }
 
 .upload-content {
@@ -493,23 +568,52 @@ watch(activeTab, key => {
   margin-bottom: 16px;
 }
 
-.ant-upload-text {
+.dragger :deep(.ant-upload-drag p.ant-upload-text),
+.dragger :deep(.ant-upload-drag .ant-upload-text) {
   font-size: 16px;
   font-weight: 500;
+  color: #fff !important;
   margin-bottom: 8px;
-  color: #333;
 }
-
-.ant-upload-hint {
-  color: #666;
+.dragger :deep(.ant-upload-drag p.ant-upload-hint),
+.dragger :deep(.ant-upload-drag .ant-upload-hint) {
+  color: rgba(255, 255, 255, 0.55) !important;
   text-align: center;
-  max-width: 80%;
+  max-width: 90%;
   margin-bottom: 16px;
 }
 
 .upload-actions {
   margin-top: 24px;
   text-align: center;
+}
+.upload-actions :deep(.ant-btn-primary) {
+  background: linear-gradient(135deg, #1677ff 0%, #4096ff 100%) !important;
+  border: none !important;
+  box-shadow: 0 4px 16px rgba(22, 119, 255, 0.35);
+}
+.upload-actions :deep(.ant-btn:not(.ant-btn-primary)) {
+  background: rgba(255, 255, 255, 0.06) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  color: rgba(255, 255, 255, 0.85) !important;
+}
+.upload-actions :deep(.ant-btn:not(.ant-btn-primary):hover:not(:disabled)) {
+  border-color: rgba(22, 119, 255, 0.4) !important;
+  color: #69b1ff !important;
+}
+
+.vdb-container :deep(.pending-tip-alert) {
+  margin-top: 16px;
+}
+.vdb-container :deep(.ant-alert-info) {
+  background: rgba(22, 119, 255, 0.12);
+  border: 1px solid rgba(22, 119, 255, 0.35);
+}
+.vdb-container :deep(.ant-alert-message) {
+  color: #fff;
+}
+.vdb-container :deep(.ant-alert-description) {
+  color: rgba(255, 255, 255, 0.65);
 }
 
 .file-list-header {
@@ -527,6 +631,20 @@ watch(activeTab, key => {
   flex-wrap: wrap;
 }
 
+.vdb-container :deep(.ant-input-affix-wrapper),
+.vdb-container :deep(.ant-input-search .ant-input-group .ant-input) {
+  background: rgba(255, 255, 255, 0.06) !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
+  color: rgba(255, 255, 255, 0.9) !important;
+}
+.vdb-container :deep(.ant-input::placeholder) {
+  color: rgba(255, 255, 255, 0.35);
+}
+.vdb-container :deep(.ant-input-search-button) {
+  background: linear-gradient(135deg, #1677ff 0%, #4096ff 100%) !important;
+  border: none !important;
+}
+
 .table-container {
   display: flex;
   flex-direction: column;
@@ -535,9 +653,10 @@ watch(activeTab, key => {
 }
 
 .file-table {
-  border-radius: 8px;
+  border-radius: 12px;
   overflow: hidden;
   flex: 1;
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .file-table :deep(.ant-table-container) {
@@ -551,24 +670,49 @@ watch(activeTab, key => {
   overflow-y: auto !important;
 }
 
-.file-table :deep(.ant-table-thead>tr>th) {
-  background: #fafafa;
+.file-table :deep(.ant-table),
+.file-table :deep(.ant-table-cell) {
+  background: transparent !important;
+  color: rgba(255, 255, 255, 0.88) !important;
+}
+.file-table :deep(.ant-table-thead > tr > th) {
+  background: rgba(255, 255, 255, 0.06) !important;
+  color: rgba(255, 255, 255, 0.85) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
   font-weight: 600;
+}
+.file-table :deep(.ant-table-tbody > tr > td) {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
+}
+.file-table :deep(.ant-table-tbody > tr:hover > td) {
+  background: rgba(22, 119, 255, 0.08) !important;
 }
 
 .file-table :deep(.ant-pagination) {
   padding: 16px 0;
   margin-top: auto;
-  background: white;
+  background: rgba(10, 15, 26, 0.95);
   position: sticky;
   bottom: 0;
   z-index: 1;
+}
+.file-table :deep(.ant-pagination-item a),
+.file-table :deep(.ant-pagination-prev button),
+.file-table :deep(.ant-pagination-next button) {
+  color: rgba(255, 255, 255, 0.75);
+}
+.file-table :deep(.ant-pagination-item-active) {
+  border-color: #1677ff;
+}
+.file-table :deep(.ant-pagination-item-active a) {
+  color: #69b1ff;
 }
 
 .file-name-cell {
   display: flex;
   align-items: center;
   min-height: 40px;
+  gap: 8px;
 }
 
 .file-name {
@@ -576,65 +720,19 @@ watch(activeTab, key => {
   text-overflow: ellipsis;
   white-space: nowrap;
   max-width: 200px;
+  color: rgba(255, 255, 255, 0.9);
 }
 
-.help-content {
-  padding: 16px;
+.stored-panel-card {
+  background: rgba(255, 255, 255, 0.03) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-radius: 14px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+}
+.stored-panel-card :deep(.ant-card-body) {
+  color: rgba(255, 255, 255, 0.85);
 }
 
-.preview-container {
-  display: flex;
-  flex-direction: column;
-  height: 70vh;
-}
-
-.preview-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding-bottom: 16px;
-  margin-bottom: 16px;
-  border-bottom: 1px solid #f0f0f0;
-}
-
-.file-info {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
-
-.file-meta {
-  display: flex;
-  gap: 16px;
-  color: #666;
-  font-size: 13px;
-  margin-top: 4px;
-}
-
-.preview-content {
-  flex: 1;
-  overflow: auto;
-}
-
-.preview-body {
-  padding: 16px;
-  background: #fafafa;
-  border-radius: 4px;
-}
-
-.preview-text {
-  margin-top: 16px;
-  line-height: 1.8;
-}
-
-.loading-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-}
-
-/* 管理 Tab 自定义样式 */
 .stored-header {
   display: flex;
   justify-content: space-between;
@@ -644,11 +742,45 @@ watch(activeTab, key => {
   gap: 16px;
 }
 
+.stored-table {
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+.stored-table :deep(.ant-table),
+.stored-table :deep(.ant-table-cell) {
+  background: transparent !important;
+  color: rgba(255, 255, 255, 0.88) !important;
+}
+.stored-table :deep(.ant-table-thead > tr > th) {
+  background: rgba(255, 255, 255, 0.06) !important;
+  color: rgba(255, 255, 255, 0.85) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+.stored-table :deep(.ant-table-tbody > tr > td) {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
+}
+.stored-table :deep(.ant-table-tbody > tr:hover > td) {
+  background: rgba(22, 119, 255, 0.08) !important;
+}
+.stored-table :deep(.ant-pagination-item a),
+.stored-table :deep(.ant-pagination-prev button),
+.stored-table :deep(.ant-pagination-next button) {
+  color: rgba(255, 255, 255, 0.75);
+}
+.stored-table :deep(.ant-pagination-item-active) {
+  border-color: #1677ff;
+}
+.stored-table :deep(.ant-btn-link) {
+  color: #69b1ff;
+}
+.stored-table :deep(.ant-btn-link.ant-btn-dangerous) {
+  color: #ff7875;
+}
+
 .stored-stats {
   display: flex;
   gap: 8px;
   flex-wrap: wrap;
 }
-
-/* Chunk 预览 */
 </style>
